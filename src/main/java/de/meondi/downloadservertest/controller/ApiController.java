@@ -3,10 +3,8 @@ package de.meondi.downloadservertest.controller;
 import de.meondi.downloadservertest.service.DownloadService;
 import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.net.MalformedURLException;
 
@@ -26,5 +24,10 @@ public class ApiController {
         return ResponseEntity.ok()
                 .header("Content-Disposition", resource.getFilename())
                 .body(resource);
+    }
+
+    @PostMapping("/uploadfile")
+    public void uploadFile(@RequestParam("file")MultipartFile file) throws MalformedURLException {
+        downloadService.storeFile(file);
     }
 }
